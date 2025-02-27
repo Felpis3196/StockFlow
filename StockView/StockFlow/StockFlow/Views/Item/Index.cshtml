@@ -1,0 +1,171 @@
+﻿@model IEnumerable<StockFlow.Models.Item>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MinAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Supplier)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MinAmount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Supplier)
+                </td>
+                <td>
+                    <button type="button" class="btn btn-warning btn-edit" data-id="@item.Id">Edit</button> |
+                    <button type="button" class="btn btn-danger btn-delete" data-id="@item.Id">Delete</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Modal de Edição -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Editar Item</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editForm" asp-action="Update" method="post">
+                    <input type="hidden" id="editId" name="Id">
+                    <div class="mb-3">
+                        <label for="editName" class="form-label">Nome</label>
+                        <input type="text" class="form-control" id="editName" name="Name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editAmount" class="form-label">Quantidade</label>
+                        <input type="number" class="form-control" id="editAmount" name="Amount" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editMinAmount" class="form-label">Quantidade Mínima</label>
+                        <input type="number" class="form-control" id="editMinAmount" name="MinAmount" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editSupplier" class="form-label">Fornecedor</label>
+                        <input type="text" class="form-control" id="editSupplier" name="Supplier" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editCategory" class="form-label">Categoria</label>
+                        <input type="text" class="form-control" id="editCategory" name="Category" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Excluir item
+        $(".btn-delete").click(function () {
+            var itemId = $(this).data("id");
+
+            if (confirm("Tem certeza que deseja excluir este item?")) {
+                $.ajax({
+                    url: "/Item/Delete",
+                    type: "POST",
+                    data: { id: itemId },
+                    success: function (response) {
+                        if (response.success) {
+                            alert("Item excluído com sucesso!");
+                            location.reload();
+                        } else {
+                            alert("Erro: " + response.message);
+                        }
+                    },
+                    error: function () {
+                        alert("Erro ao excluir o item.");
+                    }
+                });
+            }
+        });
+
+        // Editar item
+        $(".btn-edit").click(function () {
+        var itemId = $(this).data("id");
+
+            $.get("/Item/GetById/" + itemId, function (data) {
+                $("#editId").val(data.id);
+                $("#editName").val(data.name);
+                $("#editAmount").val(data.amount);
+                $("#editMinAmount").val(data.minAmount);
+                $("#editSupplier").val(data.supplier);
+                $("#editCategory").val(data.category);
+                $("#editModal").modal("show");
+            });
+        });
+
+        $("#editForm").submit(function (event) {
+            event.preventDefault();
+
+            var formData = $(this).serialize();
+
+            $.ajax({
+                type: "POST",
+                url: "/Item/Update",
+                data: formData,
+                success: function (response) {
+                    if (response.success) {
+                        location.reload();
+                    } else {
+                        alert("Erro ao atualizar: " + response.message);
+                    }
+                },
+                error: function (error) {
+                    console.error("Erro ao atualizar:", error);
+                }
+            });
+        });
+    });
+</script>
+
+

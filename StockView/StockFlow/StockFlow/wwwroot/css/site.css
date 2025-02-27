@@ -1,0 +1,76 @@
+html {
+  font-size: 14px;
+  height: 100%;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+  width: 100%;
+}
+
+.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
+  color: var(--bs-secondary-color);
+  text-align: end;
+}
+
+.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
+  text-align: start;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+}
+
+/* Sidebar fixa na esquerda */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-y: auto;
+}
+
+/* Ajusta o conteúdo principal */
+.content {
+    margin-left: 250px;
+    width: calc(100% - 250px);
+}
+
+.orange-bg{
+    background-color: 
+}
+
+.dark-blue-text {
+    color: #14213D
+}
+
+.dark-blue-bg {
+    background-color: #14213D
+}
+
+.orange-text{
+    color: #FCA311
+}
+
+.smokey-grey {
+    color: #E5E5E5
+}
