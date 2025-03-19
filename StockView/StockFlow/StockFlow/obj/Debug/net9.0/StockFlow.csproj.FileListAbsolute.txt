@@ -282,4 +282,6 @@ C:\Users\fegri\OneDrive\Área de Trabalho\StockFlow\StockView\StockFlow\StockFlo
 C:\Users\fegri\OneDrive\Área de Trabalho\StockFlow\StockView\StockFlow\StockFlow\obj\Debug\net9.0\StockFlow.pdb
 C:\Users\fegri\OneDrive\Área de Trabalho\StockFlow\StockView\StockFlow\StockFlow\obj\Debug\net9.0\StockFlow.genruntimeconfig.cache
 C:\Users\fegri\OneDrive\Área de Trabalho\StockFlow\StockView\StockFlow\StockFlow\obj\Debug\net9.0\ref\StockFlow.dll
-C:\Users\fegri\OneDrive\Área de Trabalho\StockFlow\StockView\StockFlow\StockFlow\obj\Debug\net9.0\compressed\vfz4oq0jxi-fkyzyfj0fn.gz
+C:\Users\fegri\OneDrive\Área de Trabalho\StockFlow\StockView\StockFlow\StockFlow\obj\Debug\net9.0\StockFlow.sourcelink.json
+C:\Users\fegri\OneDrive\Área de Trabalho\StockFlow\StockView\StockFlow\StockFlow\bin\Debug\net9.0\BootstrapIcons.AspNetCore.dll
+C:\Users\fegri\OneDrive\Área de Trabalho\StockFlow\StockView\StockFlow\StockFlow\obj\Debug\net9.0\compressed\vfz4oq0jxi-p90bpnx53i.gz

@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "aJ2Hkw1A7y4=",
+  "dgSpecHash": "bEU02rPzsKc=",
   "success": true,
   "projectFilePath": "C:\\Users\\fegri\\OneDrive\\Área de Trabalho\\StockFlow\\StockView\\StockFlow\\StockFlow\\StockFlow.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\fegri\\.nuget\\packages\\bootstrapicons.aspnetcore\\1.11.0\\bootstrapicons.aspnetcore.1.11.0.nupkg.sha512",
     "C:\\Users\\fegri\\.nuget\\packages\\humanizer\\2.14.1\\humanizer.2.14.1.nupkg.sha512",
     "C:\\Users\\fegri\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\fegri\\.nuget\\packages\\humanizer.core.af\\2.14.1\\humanizer.core.af.2.14.1.nupkg.sha512",

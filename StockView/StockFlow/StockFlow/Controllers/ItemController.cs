@@ -47,6 +47,7 @@ public class ItemController : Controller
             minAmount = item.MinAmount,
             supplier = item.Supplier,
             category = item.Category,
+            price = item.Price,
         });
     }
 
@@ -55,13 +56,13 @@ public class ItemController : Controller
     {
         try
         {
+            item.Id = Guid.NewGuid();
             await _itemService.AddAsync(item);
-            return RedirectToAction("Index");
+            return Json(new { success = true });
         }
         catch (Exception ex)
         {
-            ModelState.AddModelError(string.Empty, ex.Message);
-            return View(item);
+            return Json(new { success = false, message = ex.Message });
         }
     }
 

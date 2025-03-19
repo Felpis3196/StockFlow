@@ -17,8 +17,7 @@ con.connect()
 
 // 🟢 Criar item
 app.post('/items', (request, response) => {
-    console.log("Recebido no CREATE")
-    console.log(request.body);
+    console.log("Recebido no CREATE", request.body);
 
     const Id = request.body.Id || request.body.id;
     const Name = request.body.Name || request.body.name;
@@ -26,14 +25,23 @@ app.post('/items', (request, response) => {
     const MinAmount = request.body.MinAmount || request.body.minAmount;
     const Category = request.body.Category || request.body.category;
     const Supplier = request.body.Supplier || request.body.supplier;
+    let Price = request.body.Price || request.body.price;
 
-    if (!Id || !Name || !Amount || !MinAmount || !Category || !Supplier) {
+    if (!Id || !Name || !Amount || !MinAmount || !Category || !Supplier || !Price) {
         return response.status(400).json({ error: "Todos os campos são obrigatórios!" });
     }
 
-    const insert_query = 'INSERT INTO item (Id, Name, Amount, MinAmount, Category, Supplier) VALUES ($1, $2, $3, $4, $5, $6)';
+    Price = parseFloat(Price);
 
-    con.query(insert_query, [Id, Name, Amount, MinAmount, Category, Supplier], (error, result) => {
+    if (isNaN(Price)) {
+        return response.status(400).json({ error: "Preço inválido" });
+    }
+
+    console.log("Valor do Preço:", Price);
+
+    const insert_query = 'INSERT INTO item (Id, Name, Amount, MinAmount, Category, Supplier, Price) VALUES ($1, $2, $3, $4, $5, $6, $7)';
+
+    con.query(insert_query, [Id, Name, Amount, MinAmount, Category, Supplier, Price], (error, result) => {
         if (error) {
             console.error("Erro de consulta:", error);
             return response.status(500).json({ error: "Erro ao criar item", details: error.message });
@@ -74,26 +82,39 @@ app.get('/items/:id', (request, response) => {
     });
 });
 
+
 // 🟢 Atualizar item por ID
 app.put('/items/:id', (request, response) => {
-    console.log("Recebido no UPDATE:");
-    console.log(request.body);
+    console.log("Recebido no UPDATE:", request.body);
 
     const { id } = request.params; 
-    const { Name, Amount, MinAmount, Category, Supplier } = request.body;
+    const { name, amount, minAmount, category, supplier, price } = request.body;
+
+    // Convertendo o preço para número
+    const priceValue = parseFloat(price);
+    if (isNaN(priceValue)) {
+        return response.status(400).json({ error: "Preço inválido" });
+    }
+
+    // Convertendo o ID para UUID
+    const uuid = id.toString();
 
     const update_query = `
-        UPDATE item
-        SET Name = $1, Amount = $2, MinAmount = $3, Category = $4, Supplier = $5
-        WHERE Id = $6
+    UPDATE item
+    SET name = $1, amount = $2, minamount = $3, category = $4, supplier = $5, price = $6
+    WHERE id = $7::UUID
     `;
 
-    const values = [Name, Amount, MinAmount, Category, Supplier, id];
+    const values = [name, amount, minAmount, category, supplier, priceValue, uuid];
 
+    // Executando a query
     con.query(update_query, values, (error, result) => {
         if (error) {
+            console.error("Erro ao atualizar item:", error);
             return response.status(500).json({ error: "Erro ao atualizar item", details: error.message });
         }
+
+        console.log("Linhas afetadas:", result.rowCount);
 
         if (result.rowCount === 0) {
             return response.status(404).json({ message: "Item não encontrado" });
@@ -102,6 +123,7 @@ app.put('/items/:id', (request, response) => {
         response.status(200).json({ message: "Item atualizado com sucesso" });
     });
 });
+
 
 // 🟢 Deletar item por ID
 app.delete('/items/:id', (request, response) => {

@@ -2,6 +2,18 @@
   "version": 3,
   "targets": {
     "net9.0": {
+      "BootstrapIcons.AspNetCore/1.11.0": {
+        "type": "package",
+        "compile": {
+          "lib/net5.0/BootstrapIcons.AspNetCore.dll": {}
+        },
+        "runtime": {
+          "lib/net5.0/BootstrapIcons.AspNetCore.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
       "Humanizer/2.14.1": {
         "type": "package",
         "dependencies": {
@@ -2026,6 +2038,19 @@
     }
   },
   "libraries": {
+    "BootstrapIcons.AspNetCore/1.11.0": {
+      "sha512": "KqU5oEyI+aehqTToBI7HnXtKuj27Kg+vJItkmunLZnf4ioy0BCjSW4CiKS0md92u+I5VJ+kAHxOnORp/4fx3sQ==",
+      "type": "package",
+      "path": "bootstrapicons.aspnetcore/1.11.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "bootstrapicons.aspnetcore.1.11.0.nupkg.sha512",
+        "bootstrapicons.aspnetcore.nuspec",
+        "lib/net5.0/BootstrapIcons.AspNetCore.dll"
+      ]
+    },
     "Humanizer/2.14.1": {
       "sha512": "/FUTD3cEceAAmJSCPN9+J+VhGwmL/C12jvwlyM1DFXShEMsBzvLzLqSrJ2rb+k/W2znKw7JyflZgZpyE+tI7lA==",
       "type": "package",
@@ -5494,6 +5519,7 @@
   },
   "projectFileDependencyGroups": {
     "net9.0": [
+      "BootstrapIcons.AspNetCore >= 1.11.0",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 9.0.0"
     ]
   },
@@ -5547,6 +5573,10 @@
       "net9.0": {
         "targetAlias": "net9.0",
         "dependencies": {
+          "BootstrapIcons.AspNetCore": {
+            "target": "Package",
+            "version": "[1.11.0, )"
+          },
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
             "target": "Package",
             "version": "[9.0.0, )"

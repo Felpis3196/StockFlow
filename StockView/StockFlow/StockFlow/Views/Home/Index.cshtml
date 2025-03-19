@@ -1,14 +1,113 @@
-﻿@{
+﻿@model StockFlow.Models.ViewModels.DashboardViewModel
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="d-flex flex-column">
-    <div class="w-100 d-flex justify-content-around bg-danger">
-        <div>
-            box1
+<div class="container text-black">
+    <div class="row g-3">
+        <h1 class="text-white">Informações Sobre o Estoque</h1>
+        <div class="col-md-6">
+            <div class="p-3 border rounded bg-light text-center shadow-sm">
+                <strong>Item mais caro:</strong> <br />
+                @Model.MostExpensiveItem?.Name - @Model.MostExpensiveItem.Price
+            </div>
         </div>
-        <div>
-            box2
+        <div class="col-md-6">
+            <div class="p-3 border rounded bg-light text-center shadow-sm">
+                <strong>Item mais barato:</strong> <br />
+                @Model.CheapestItem?.Name - @Model.CheapestItem.Price
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="p-3 border rounded bg-light text-center shadow-sm">
+                <strong>Preço médio dos itens:</strong> <br />
+                @Model.AveragePrice.ToString("C")
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="p-3 border rounded bg-light text-center shadow-sm">
+                <strong>Valor total do estoque:</strong> <br />
+                @Model.TotalStockValue.ToString("C")
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="p-3 border rounded bg-light text-center shadow-sm">
+                <strong>Quantidade total de itens:</strong> <br />
+                @Model.TotalItems
+            </div>
+        </div>
+        <h1 class="text-white">Informações Sobre Terceiros</h1>
+        <div class="col-md-6">
+            <div class="p-3 border rounded bg-light text-center shadow-sm">
+                <strong>Fornecedor mais comum:</strong> <br />
+                @Model.MostCommonSupplier
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="p-3 border rounded bg-light text-center shadow-sm">
+                <strong>Categoria mais comum:</strong> <br />
+                @Model.MostCommonCategory
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="p-3 border rounded bg-light text-center shadow-sm">
+                <strong>Total de fornecedores diferentes:</strong> <br />
+                @Model.TotalSuppliers
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="p-3 border rounded bg-light text-center shadow-sm">
+                <strong>Total de categorias diferentes:</strong> <br />
+                @Model.TotalCategories
+            </div>
+        </div>
+
+        <div class="container mt-4">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="text-white">Distribuição de Itens por Fornecedor</h5>
+                    <canvas id="supplierChart"></canvas>
+                </div>
+                <div class="col-md-6">
+                    <h5 class="text-white">Distribuição de Itens por Categoria</h5>
+                    <canvas id="categoryChart"></canvas>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var supplierData = {
+        labels: @Html.Raw(Json.Serialize(Model.SupplierDistribution.Keys)),
+        datasets: [{
+            label: "Distribuição de Itens por Fornecedor (%)",
+            data: @Html.Raw(Json.Serialize(Model.SupplierDistribution.Values)),
+            backgroundColor: ["#ff6384", "#36a2eb", "#ffce56", "#4bc0c0", "#9966ff"],
+            hoverOffset: 4
+        }]
+    };
+
+    var categoryData = {
+        labels: @Html.Raw(Json.Serialize(Model.CategoryDistribution.Keys)),
+        datasets: [{
+            label: "Distribuição de Itens por Categoria (%)",
+            data: @Html.Raw(Json.Serialize(Model.CategoryDistribution.Values)),
+            backgroundColor: ["#ff9f40", "#ffcd56", "#4bc0c0", "#36a2eb", "#9966ff"],
+            hoverOffset: 4
+        }]
+    };
+
+    var supplierChart = new Chart(document.getElementById("supplierChart"), {
+        type: "pie",
+        data: supplierData
+    });
+
+    var categoryChart = new Chart(document.getElementById("categoryChart"), {
+        type: "pie",
+        data: categoryData
+    });
+</script>

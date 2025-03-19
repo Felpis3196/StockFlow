@@ -60,11 +60,17 @@ namespace StockFlow.Repositories
 
         public async Task UpdateAsync(Item item)
         {
-            var json = JsonSerializer.Serialize(item);
+            var options = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            };
+
+            var json = JsonSerializer.Serialize(item, options);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await _httpClient.PutAsync($"{BaseUrl}/{item.Id}", content);
             response.EnsureSuccessStatusCode();
         }
+
 
         public async Task DeleteAsync(Guid id)
         {
